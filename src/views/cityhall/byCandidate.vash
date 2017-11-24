@@ -1,0 +1,106 @@
+﻿@html.extend("/shared/layout", function(modShr){
+    @html.block("scripts", function(model){
+<script src="/highcharts/highcharts.js"></script>
+<script src="/highcharts/modules/exporting.js"></script>
+<script src="/app/cityhall/byCandidateCtrl.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        var series = JSON.parse(window.decodeEntities('@model.series'));
+        $('#statCityHallByResult').highcharts({
+            title: {
+                text: 'Elecciones'
+            },
+            xAxis: {
+                categories: [@model.categories]
+            },
+            yAxis:{
+                title:{
+                    text: 'Votaciones'
+                }
+            },
+            chart: {
+                height: 600,
+                type: 'column'
+            },
+            credits: {
+                enabled: false
+            },
+            plotOptions: {
+                series: {
+                    dataLabels: {
+                        useHTML: true,
+                        enabled: true,
+                        //rotation: -90,
+                        color: '#000000',
+                        align: 'right',
+                        //x: 2,
+                        //y: 17,
+                        formatter: function () {
+                            //if(this.y === null)
+                            return '';
+
+                            //var img = this.series.name.toLowerCase();
+                            //return '<div><span class="label label-warning arrowed-right arrowed-in">' + this.y +
+                            //    '</span><img width="30px" height="30px" src="/images/' + img + '-t.png" /></div>';
+                        },
+                        style: {
+                            fontSize: '13px',
+                            fontFamily: 'Verdana, sans-serif',
+                        }
+                    }
+                },
+                column: {
+                    stacking: 'normal'
+                }
+            },
+            series: series
+        });
+
+        $('.select2').css('width','200px').select2({allowClear:true})
+
+    });
+</script>
+
+    })
+    @html.block("body", function(model){
+<div class="main-container" id="main-container" ng-controller="byResultController">
+    <div class="main-content-inner" ng-init="chartName = '#statCityHallByResult'">
+        <!-- #section:basics/content.breadcrumbs -->
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    <a href="/cityhall/index">Inicio</a>
+                </li>
+                <li class="active">Ayuntamiento</li>
+            </ul>
+        </div>
+        <div class="page-header element-center">
+            <br />
+            <h1>
+                Estadística Elecciones de Ayuntamiento (Por candidato)
+            </h1>
+        </div>
+        <br />
+        <br />
+        <div class="page-content">
+            <div class="row">
+                <div class="col-xs-9 col-xs-offset-1">
+                    <select ng-options="i.value for i in lstSeries" ng-model="series" ng-change="onSeriesChanged()" ng-init='lstSeries = @model.extSeries; infoSeries = @model.results;'
+                            multiple="" id="serie" name="serie" class="select2 tag-input-style" style="width: 400px !important;" data-placeholder="Elige la(s) serie(s)..."></select>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div id="statCityHallByResult" style="min-width: 310px; min-height: 400px; margin: 0 auto; color: #ff9400"></div>
+        </div>
+    </div>
+</div>
+
+    })
+})

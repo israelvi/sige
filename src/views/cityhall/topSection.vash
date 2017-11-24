@@ -1,0 +1,177 @@
+﻿@html.extend("/shared/layout", function(modShr){
+    @html.block("scripts", function(model){
+<script src="/highcharts/highcharts.js"></script>
+<script src="/highcharts/modules/exporting.js"></script>
+<script src="/app/cityhall/topSectionCtrl.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#statCityHall').highcharts({
+            chart: {
+                type: 'areaspline',
+                height: 600
+            },
+            title: {
+                text: ''
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -100,
+                y: 10,
+                floating: true,
+                borderWidth: 1,
+                backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+            },
+            yAxis: {
+                title: {
+                    text: 'Votos'
+                }
+            },
+            tooltip: {
+                shared: true,
+                valueSuffix: ' votos'
+            },
+            credits: {
+                enabled: false
+            },
+            tooltip: {
+                formatter: function () {
+                    //debugger;
+                    return '<div style="font-size:9px;">' + this.x + '</div>' + ' <br/>'
+                        + window.splitToHtml(this.series.options.location[this.x], '|', '<span style="font-size:9px;">-', '</span><br/>') + ' <br/>'
+                        + '<div style="fill:' + this.series.color + '">●</div>' + ' <div>' + this.series.name + ': </div>'
+                        + '<b>' + window.formatThousands(this.y) + ' </b><br/>';
+                }
+            },
+            plotOptions: {
+                areaspline: {
+                    fillOpacity: 0.4
+                }
+            }
+        });
+    });
+</script>
+
+    })
+    @html.block("body", function(model){
+<div class="main-container" id="main-container" ng-controller="topSectionController">
+    <div class="main-content-inner" ng-init="chartName = '#statCityHall'">
+        <!-- #section:basics/content.breadcrumbs -->
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    <a href="/cityhall/index">Inicio</a>
+                </li>
+                <li class="active">Ayuntamiento</li>
+            </ul>
+        </div>
+        <div class="page-header element-center">
+            <br />
+            <h1>
+                Estadística Elecciones de Ayuntamiento (Top N por sección)
+            </h1>
+        </div>
+        <div class="page-content">
+            <div class="row">
+                <div class="col-xs-6 col-xs-offset-3 widget-container-col">
+                    <div class="widget-box widget-color-blue2">
+                        <div class="widget-header">
+                            <h5 class="widget-title bigger lighter">Elige el filtro para mostrar la gráfica</h5>
+                            <span class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </span>
+                        </div>
+
+                        <div class="widget-body">
+                            <div class="widget-main padding-16">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> Año </div>
+                                                <div class="profile-info-value">
+                                                    <select class="form-control" id="form-field-select-1"
+                                                            ng-options="i.value for i in lstYears" ng-model="year"
+                                                            ng-init='lstYears = @model.years; year = lstYears[0]; idMun = @model.id;'></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> Candidato/Tipo de voto </div>
+                                                <div class="profile-info-value">
+                                                    <select class="form-control" id="form-field-select-1"
+                                                            ng-options="i.value for i in lstCandidates" ng-model="candidate"
+                                                            ng-init='lstCandidates = @model.candidates; candidate = lstCandidates[0];'></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> Tipo de búsqueda </div>
+                                                <div class="profile-info-value">
+                                                    <select class="form-control" id="form-field-select-1"
+                                                            ng-options="i.value for i in lstSearchType" ng-model="searchType"
+                                                            ng-init='lstSearchType = @model.searchType; searchType = lstSearchType[0];'></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> Top N </div>
+                                                <div class="profile-info-value">
+                                                    <select class="form-control" id="form-field-select-1"
+                                                            ng-options="i.value for i in lstTopN" ng-model="topN"
+                                                            ng-init='lstTopN = @model.topN; topN = lstTopN[0];'></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="space-14">
+
+                                    </div>
+                                    <div class="col-xs-12 element-center">
+                                        <button class="btn btn-primary" ng-click="onSearch()">
+                                            <i class="ace-icon fa fa-search align-top bigger-125"></i>
+                                            Buscar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="row" ng-show="isVisible">
+                <div class="col-xs-6 col-xs-offset-5 element-right">
+                    <h5>Total de votos (Top N): <strong>{{totalVot}}</strong></h5>
+                </div>
+            </div>
+            <div id="statCityHall" style="min-width: 310px; min-height: 400px; margin: 0 auto; color: #ff9400"></div>
+        </div>
+    </div>
+</div>
+
+    })
+})

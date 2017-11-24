@@ -1,0 +1,20 @@
+﻿@html.extend("/shared/layout", function(modShr){
+    @html.block("scripts", function(model){
+    })
+    @html.block("body", function(model){
+<div class="page-header">
+    <h1>
+        Bienvenido
+    </h1>
+</div>
+<div class="row">
+    <div class="col-xs-6 col-xs-offset-3 ">
+        <div class="col-xs-12" style="text-align: center !important; margin: auto !important;">
+            <div class="hr hr14"></div>
+            <span class="bigger-300">Visión electoral</span>
+            <div class="hr hr14"></div>
+        </div>
+    </div>
+</div>
+    })
+})

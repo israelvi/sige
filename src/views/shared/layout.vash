@@ -1,0 +1,324 @@
+﻿<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <meta name="SIGE" content="width=device-width, initial-scale=1.0">
+        <meta name="SIGE" content="">
+          <meta name="author" content="">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+                <title>Visión</title>
+
+                <link href="/jquery/dist/jquery-ui.min.css" rel="stylesheet" />
+                <link href="/jquery/dist/jquery-ui.theme.min.css" rel="stylesheet" />
+                <link href="/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+                <link href="/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" />
+                <link href="/angular/angular-csp.css" rel="stylesheet" />
+                <link href="/assets/css/font-awesome.css" rel="stylesheet" />
+                <link href="/assets/css/select2.css" rel="stylesheet" />
+                <link href="/assets/css/ace-fonts.css" rel="stylesheet" />
+                <link href="/assets/css/bootstrap-multiselect.css" rel="stylesheet" />
+                <link href="/assets/css/ace.css" rel="stylesheet" />
+                <link href="/stylesheets/style.css" rel="stylesheet" />
+
+                @html.block("css")
+              </head>
+  <body ng-app="sigeApp" ng-cloak="" class="no-skin">
+    <div id="navbar" class="navbar navbar-default    navbar-collapse       h-navbar">
+      <script type="text/javascript">
+        try { ace.settings.check('navbar', 'fixed') } catch (e) { }
+      </script>
+
+      <div class="navbar-container" id="navbar-container">
+        <div class="navbar-header pull-left">
+          <!-- #section:basics/navbar.layout.brand -->
+          <a href="#" class="navbar-brand">
+            <small>
+              <i class="fa fa-group"></i>
+              <span style="margin: 0 25px">Visión Electoral</span>
+            </small>
+          </a>
+        </div>
+
+        <nav role="navigation" class="navbar-menu pull-left collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="ace-icon fa fa-bar-chart"></i>
+                Ayuntamiento Tlalnepantla
+                &nbsp;
+                <i class="ace-icon fa fa-angle-down bigger-110"></i>
+              </a>
+
+              <ul class="dropdown-menu dropdown-light-blue dropdown-caret">
+                <li>
+                  <a href="/cityhall/byResults?id=105">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Por resultados
+                  </a>
+                </li>
+
+                <li>
+                  <a href="/cityhall/byCandidate?id=105">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Por candidato
+                  </a>
+                </li>
+
+                <li>
+                  <a href="/cityhall/topSection?id=105">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Top n por sección
+                  </a>
+                </li>
+                <li>
+                  <a href="/cityhall/sectionDifference?id=105">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Diferencia entre secciones
+                  </a>
+                </li>
+                <li>
+                  <a href="/cityhall/projection?id=105">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Proyección
+                  </a>
+                </li>
+                <li>
+                  <a href="/cityhall/projectionV2?id=105">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Proyección V2.0
+                  </a>
+                </li>
+                <li>
+                  <a href="/cityhall/projectionV3?id=105">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Proyección V3.0
+                  </a>
+                </li>
+                <li>
+                  <a href="/cityhall/projectionV4?id=105">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Proyección V4.0
+                  </a>
+                </li>
+                <li>
+                  <a href="/cityhall/sectionChangeParty?id=105">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Secciones que cambiaron de partido
+                  </a>
+                </li>
+                <li>
+                  <a href="/cityhall/pollingProjection?id=105">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Proyección sobre casillas
+                  </a>
+                </li>
+                <li>
+                  <a href="/cityhall/pollingProjectionV2?id=105">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Proyección sobre casillas V2.0
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <!--<li>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="ace-icon fa fa-bar-chart"></i>
+                Ayuntamiento Nicolás Romero
+                &nbsp;
+                <i class="ace-icon fa fa-angle-down bigger-110"></i>
+              </a>
+
+              <ul class="dropdown-menu dropdown-light-blue dropdown-caret">
+                <li>
+                  <a href="/cityhall/byResults?id=61">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Por resultados
+                  </a>
+                </li>
+
+                <li>
+                  <a href="/cityhall/byCandidate?id=61">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Por candidato
+                  </a>
+                </li>
+
+                <li>
+                  <a href="/cityhall/topSection?id=61">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Top n por sección
+                  </a>
+                </li>
+                <li>
+                  <a href="/cityhall/sectionDifference?id=61">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Diferencia entre secciones
+                  </a>
+                </li>
+                <li>
+                  <a href="/cityhall/projection?id=61">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Proyección
+                  </a>
+                </li>
+                <li>
+                  <a href="/cityhall/sectionChangeParty?id=61">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Secciones que cambiaron de partido
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="ace-icon fa fa-bar-chart"></i>
+                Ayuntamiento Isidro Fabela
+                &nbsp;
+                <i class="ace-icon fa fa-angle-down bigger-110"></i>
+              </a>
+
+              <ul class="dropdown-menu dropdown-light-blue dropdown-caret">
+                <li>
+                  <a href="/cityhall/byResults?id=39">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Por resultados
+                  </a>
+                </li>
+
+                <li>
+                  <a href="/cityhall/byCandidate?id=39">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Por candidato
+                  </a>
+                </li>
+
+                <li>
+                  <a href="/cityhall/topSection?id=39">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Top n por sección
+                  </a>
+                </li>
+                <li>
+                  <a href="/cityhall/sectionDifference?id=39">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Diferencia entre secciones
+                  </a>
+                </li>
+                <li>
+                  <a href="/cityhall/projection?id=39">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Proyección
+                  </a>
+                </li>
+                <li>
+                  <a href="/cityhall/sectionChangeParty?id=39">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Secciones que cambiaron de partido
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="ace-icon fa fa-bar-chart"></i>
+                Ayuntamiento Tultepec
+                &nbsp;
+                <i class="ace-icon fa fa-angle-down bigger-110"></i>
+              </a>
+
+              <ul class="dropdown-menu dropdown-light-blue dropdown-caret">
+                <li>
+                  <a href="/cityhall/byResults?id=109">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Por resultados
+                  </a>
+                </li>
+
+                <li>
+                  <a href="/cityhall/byCandidate?id=109">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Por candidato
+                  </a>
+                </li>
+
+                <li>
+                  <a href="/cityhall/topSection?id=109">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Top n por sección
+                  </a>
+                </li>
+                <li>
+                  <a href="/cityhall/sectionDifference?id=109">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Diferencia entre secciones
+                  </a>
+                </li>
+                <li>
+                  <a href="/cityhall/projection?id=109">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Proyección
+                  </a>
+                </li>
+                <li>
+                  <a href="/cityhall/sectionChangeParty?id=109">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Secciones que cambiaron de partido
+                  </a>
+                </li>
+              </ul>
+            </li>-->
+            <!--<li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="ace-icon fa fa-bar-chart"></i>
+                            Diputados federales
+                            &nbsp;
+                            <i class="ace-icon fa fa-angle-down bigger-110"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="ace-icon fa fa-bar-chart"></i>
+                            Diputados locales
+                            &nbsp;
+                            <i class="ace-icon fa fa-angle-down bigger-110"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="ace-icon fa fa-bar-chart"></i>
+                            Gobernador
+                            &nbsp;
+                            <i class="ace-icon fa fa-angle-down bigger-110"></i>
+                        </a>
+                    </li>-->
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <div>@html.block("body")</div>
+    <div>
+      <div class="footer-inner" style="text-align:center !important; padding-top:100px !important;">
+        <div class="footer-content">
+          <span class="bigger-110">
+            <small>
+              <span class="blue bolder">Powered by IDRA Soft S.A. de C.V. 2018 </span>
+            </small>
+          </span>
+        </div>
+      </div>
+    </div>
+    <script src="/jquery/dist/jquery.min.js"></script>
+    <script src="/jquery/dist/jquery-ui.min.js"></script>
+    <script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/angular/angular.min.js"></script>
+    <script src="/javascripts/ui-bootstrap-tpls-0.12.0.min.js"></script>
+    <script src="/app/shared/mainApp.js"></script>
+    <script src="/assets/js/ace-extra.js"></script>
+    <script src="/assets/js/ace-elements.js"></script>
+    <script src="/assets/js/ace.js"></script>
+    <script src="/assets/js/select2.js"></script>
+    <script src="/javascripts/common.js"></script>
+    @html.block("scripts")
+  </body>
+</html>

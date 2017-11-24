@@ -1,0 +1,421 @@
+﻿@html.extend("/shared/layout", function(modShr){
+    @html.block("scripts", function(model){
+<script src="/highcharts/highcharts.js"></script>
+<script src="/highcharts/modules/exporting.js"></script>
+<script src="/app/cityhall/projectionCtrl.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        var series = JSON.parse(window.decodeEntities('@model.series'));
+        $('#statCityHallProjection').highcharts({
+            title: {
+                text: 'Proyecciones'
+            },
+            xAxis: {
+                categories: [@model.categories]
+            },
+            yAxis:{
+                title:{
+                    text: 'Votaciones'
+                }
+            },
+            chart: {
+                height: 600,
+                type: 'column'
+            },
+            credits: {
+                enabled: false
+            },
+            plotOptions: {
+                series: {
+                    dataLabels: {
+                        useHTML: true,
+                        enabled: true,
+                        //rotation: -90,
+                        color: '#000000',
+                        align: 'right',
+                        //x: 2,
+                        //y: 17,
+                        formatter: function () {
+                            //if(this.y === null)
+                            return '';
+
+                            //var img = this.series.name.toLowerCase();
+                            //return '<div><span class="label label-warning arrowed-right arrowed-in">' + this.y +
+                            //    '</span><img width="30px" height="30px" src="/images/' + img + '-t.png" /></div>';
+                        },
+                        style: {
+                            fontSize: '13px',
+                            fontFamily: 'Verdana, sans-serif',
+                        }
+                    }
+                },
+                column: {
+                    stacking: 'normal'
+                }
+            },
+            series: series
+        });
+
+        $('.select2').css('width','200px').select2({allowClear:true})
+
+
+        $( "#slider-pri" ).css('width','400px').slider({
+            min: 0,
+            max: 400,
+            value: window.scProj.slParties[0],
+            step: 1,
+            animate: true,
+            slide: function( event, ui ) {
+                window.scProj.onSlideChange(ui.value, 0);
+            }
+        });
+
+        $( "#slider-pan" ).css('width','400px').slider({
+            min: 0,
+            max: 400,
+            value: window.scProj.slParties[1],
+            step: 1,
+            animate: true,
+            slide: function( event, ui ) {
+                window.scProj.onSlideChange(ui.value, 1);
+            }
+        });
+
+        $( "#slider-prd" ).css('width','400px').slider({
+            min: 0,
+            max: 400,
+            value: window.scProj.slParties[2],
+            step: 1,
+            animate: true,
+            slide: function( event, ui ) {
+                window.scProj.onSlideChange(ui.value, 2);
+            }
+        });
+
+
+        $( "#slider-ln-vt" ).css('height','150px').slider({
+            orientation: "vertical",
+            min: 0,
+            max: 100,
+            value: 50,
+            step: 1,
+            animate: true,
+            slide: function( event, ui ) {
+                window.scProj.onSlideLnVtChange(ui.value);
+                //var val = ui.value + "%";
+
+                //if( !ui.handle.firstChild ) {
+                //    $("<div class='tooltip right in' style='display:none;left:16px;top:-6px;'><div class='tooltip-arrow'></div><div class='tooltip-inner'></div></div>")
+                //    .prependTo(ui.handle);
+                //}
+                //$(ui.handle.firstChild).show().children().eq(1).text(val);
+            }
+        });
+    });
+</script>
+
+    })
+    @html.block("body", function(model){
+<div class="main-container" id="main-container" ng-controller="projectionController">
+    <div class="main-content-inner" ng-init="chartName = '#statCityHallByResult'">
+        <!-- #section:basics/content.breadcrumbs -->
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    <a href="/cityhall/index">Inicio</a>
+                </li>
+                <li class="active">Ayuntamiento</li>
+            </ul>
+        </div>
+        <div class="page-header element-center">
+            <br />
+            <h1>
+                Estadística Elecciones de Ayuntamiento (Proyecciones)
+            </h1>
+        </div>
+        <br />
+        <br />
+        <div class="page-content" ng-init='lstSeries = @model.extSeries; infoSeries = @model.results; initialize(); dataSeries = @model.series; idMun = @model.idMun'>
+            <div class="row">
+                <div class="col-xs-10 col-xs-offset-1 widget-container-col">
+                    <div class="widget-box widget-color-blue2">
+                        <div class="widget-header">
+                            <h5 class="widget-title bigger lighter">Elige el partido para generar la proyección</h5>
+                            <span class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </span>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main padding-16">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> *Listado nominal 2018</div>
+                                                <div class="profile-info-value">
+                                                    <input type="text" ng-model="lnCurr" class="form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> *Votación total 2018</div>
+                                                <div class="profile-info-value">
+                                                    <input type="text" ng-model="vtCurr" class="form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> Agrupar proyección</div>
+                                                <div class="profile-info-value">
+                                                    <select class="form-control" id="form-field-select-1"
+                                                            ng-options="i.value for i in lstOpt" ng-model="opt"
+                                                            ng-init='lstOpt = [{key:1, value:"SI"}, {key: 0, value: "NO"}]; opt = lstOpt[0]'></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> Partido </div>
+                                                <div class="profile-info-value">
+                                                    <select class="form-control" id="form-field-select-1"
+                                                            ng-options="i.value for i in lstParties" ng-model="party"
+                                                            ng-init='lstParties = @model.parties; party = lstParties[0];'></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> Votos por encima del mayor</div>
+                                                <div class="profile-info-value">
+                                                    <input type="text" ng-model="vtExt" ng-init="vtExt = 1000;" class="form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="row">
+                                            <div class="col-xs-1 col-xs-offset-1">
+                                                <div id="slider-ln-vt"></div>
+                                            </div>
+                                            <div class="col-xs-8">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <span>Listado nominal ({{slPerLn}} %)</span>
+                                                    </div>
+                                                </div>
+                                                <div style="height:100px !important;"></div>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <span>Votación total ({{slPerVt}} %)</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="ui-slider-red ui-slider-range element-center" style="background:none !important; background-color: #F6111B !important; margin: auto;" id="slider-pri"></div>
+                                            </div>
+                                            <div class="space-10"></div>
+                                            <div class="col-xs-6 col-xs-offset-3 element-center">
+                                                PRI &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{slParties[0]}} %
+                                            </div>
+                                            <div class="space-30"></div>
+                                            <div class="col-xs-12 element-center">
+                                                <div class="ui-slider-dark ui-slider-range" style="background:none !important; background-color: #00468E !important; margin: auto;" id="slider-pan"></div>
+                                            </div>
+                                            <div class="space-10"></div>
+                                            <div class="col-xs-6 col-xs-offset-3 element-center">
+                                                PAN &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{slParties[1]}} %
+                                            </div>
+                                            <div class="space-30"></div>
+                                            <div class="col-xs-12 element-center">
+                                                <div class="ui-slider-green ui-slider-range" style="background:none !important; background-color: #FFD90A !important; margin: auto;" id="slider-prd"></div>
+                                            </div>
+                                            <div class="space-10"></div>
+                                            <div class="col-xs-6 col-xs-offset-3 element-center">
+                                                PRD &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{slParties[2]}} %
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="space-10"></div>
+                                    <div class="col-xs-3 col-xs-offset-3 element-center">
+                                        <button class="btn btn-primary btn-sm" ng-click="onGenerate('#statCityHallProjection')">
+                                            <i class="ace-icon fa fa-cogs align-top bigger-115"></i>
+                                            Generar proyección
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-3 element-center">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <button class="btn btn-primary btn-sm" ng-disabled="isSaving || !serieWinner" ng-click="onSaveProj()">
+                                                    <i class="ace-icon fa fa-save align-top bigger-115"></i>
+                                                    Guardar parámetros
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="space-10"></div>
+                                        <div class="row">
+                                            <div class="col-xs-6 col-lg-offset-3" ng-show="isSaving">
+                                                <div class="progress progress-small progress-striped active">
+                                                    <div class="progress-bar progress-bar-success" style="width: 100%;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="row" ng-show="msgSucc">
+                                            <div class="col-xs-12">
+                                                <div class="alert alert-success">
+                                                    <strong>
+                                                        {{msgSucc}}
+                                                    </strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" ng-show="msgError">
+                                            <div class="col-xs-12">
+                                                <div class="alert alert-danger">
+                                                    <strong>
+                                                        {{msgError}}
+                                                    </strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <small>*Valores estimados (es posible modificar la lista nominal y la votación total)</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="col-xs-6 widget-container-col">
+                    <div class="widget-box widget-color-blue2">
+                        <div class="widget-header">
+                            <h5 class="widget-title bigger lighter">Configurar proyección</h5>
+                            <span class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </span>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main padding-16">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="row">
+                                            <div class="col-xs-1 col-xs-offset-1">
+                                                <div id="slider-ln-vt"></div>
+                                            </div>
+                                            <div class="col-xs-8">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <span>Listado nominal ({{slPerLn}} %)</span>
+                                                    </div>
+                                                </div>
+                                                <div style="height:100px !important;"></div>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <span>Votación total ({{slPerVt}} %)</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="ui-slider-red ui-slider-range" style="background:none !important; background-color: #F6111B !important; " id="slider-pri"></div>
+                                            </div>
+                                            <div class="space-10"></div>
+                                            <div class="col-xs-6 col-xs-offset-3 element-center">
+                                                PRI &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{slParties[0]}} %
+                                            </div>
+                                            <div class="space-24"></div>
+                                            <div class="col-xs-12">
+                                                <div class="ui-slider-dark ui-slider-range" style="background:none !important; background-color: #00468E !important; " id="slider-pan"></div>
+                                            </div>
+                                            <div class="space-10"></div>
+                                            <div class="col-xs-6 col-xs-offset-3 element-center">
+                                                PAN &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{slParties[1]}} %
+                                            </div>
+                                            <div class="space-24"></div>
+                                            <div class="col-xs-12">
+                                                <div class="ui-slider-green ui-slider-range" style="background:none !important; background-color: #FFD90A !important; " id="slider-prd"></div>
+                                            </div>
+                                            <div class="space-10"></div>
+                                            <div class="col-xs-6 col-xs-offset-3 element-center">
+                                                PRD &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{slParties[2]}} %
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="space-10"></div>
+                                <div class="row">
+                                    <div class="col-xs-6 element-center">
+                                        <button class="btn btn-primary btn-sm" ng-click="addSection()">
+                                            <i class="ace-icon fa fa-plus-circle align-top bigger-115"></i>
+                                            Agregar sección
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-6 element-center">
+                                        <button class="btn btn-primary btn-sm" ng-click="addLocation()">
+                                            <i class="ace-icon fa fa-plus-circle align-top bigger-115"></i>
+                                            Agregar colonia
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+            <div class="row">
+
+            </div>
+            <br />
+            <br />
+            <div id="statCityHallProjection" style="min-width: 310px; min-height: 400px; margin: 0 auto; color: #ff9400"></div>
+        </div>
+    </div>
+</div>
+
+    })
+})

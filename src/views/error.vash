@@ -1,0 +1,7 @@
+﻿@html.extend("/shared/layout", function(model){
+    @html.block("scripts", function(model){
+    })
+    @html.block("body", function(model){
+        Error: @model.message
+    })
+})

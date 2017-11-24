@@ -1,0 +1,30 @@
+a {
+  color: #00b7ff;
+}
+.element-center {
+  text-align: center !important;
+}
+.element-left {
+  text-align: left !important;
+}
+.element-right {
+  text-align: right !important;
+}
+.rectangle-tiny {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  text-align: center;
+}
+.color-pri {
+  background-color: #f6111b;
+}
+.color-pan {
+  background-color: #00468e;
+}
+.color-prd {
+  background-color: #ffd90a;
+}
+.vertical-center {
+  vertical-align: middle !important;
+}
