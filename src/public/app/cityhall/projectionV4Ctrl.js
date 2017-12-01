@@ -12,11 +12,11 @@
             var r2 = res[i][0];
             var parc = (r2.ln * 100) / lnIni;
             percLn += parc;
-            console.log(parc);
+            //console.log(parc);
             
             parc = (r2.total * 100) / totIni;
             percTot += parc;
-            console.log(parc);
+            //console.log(parc);
             
             if (i === res.length - 1) {
                 $scope.lnLast = r2.ln;
@@ -26,9 +26,9 @@
         }
         
         percLn = percLn / (i - 1);
-        console.log(percLn);
+        //console.log(percLn);
         percTot = percTot / (i - 1);
-        console.log(percTot);
+        //console.log(percTot);
         
         $scope.lnIni = lnIni;
         $scope.totIni = totIni;
@@ -113,9 +113,9 @@
         
         $scope.totalSerie.push($scope.vtCurr);
         
-        percPri = percPri / (i - 1);
-        percPan = percPan / (i - 1);
-        percPrd = percPrd / (i - 1);
+        percPri = (percPri - (percMor * 1)) / (i - 1);
+        percPan = (percPan - (percMor * 1)) / (i - 1);
+        percPrd = (percPrd - (percMor * 1)) / (i - 1);
         percMor = percMor;
         
         $scope.infoProj['vPRI'] = vPri;// = parseInt(vPri * (percPri / 100.0));
@@ -179,7 +179,7 @@
                 case 1:
                     result = ($scope.infoProj.vPAN * ($scope.slParties[1] / 100.0)) * 
                     ((($scope.slPerLn / 100) * ($scope.lnCurr / $scope.lnIni)) + (($scope.slPerVt / 100) * ($scope.vtCurr / $scope.totIni)));
-                    console.log(((($scope.slPerLn / 100) * ($scope.lnCurr / $scope.lnIni)) + (($scope.slPerVt / 100) * ($scope.vtCurr / $scope.totIni))));
+                    //console.log(((($scope.slPerLn / 100) * ($scope.lnCurr / $scope.lnIni)) + (($scope.slPerVt / 100) * ($scope.vtCurr / $scope.totIni))));
                     
                     data.push({
                         name: 'PAN-PRD',
@@ -190,13 +190,13 @@
                 case 2:
                     result = ($scope.infoProj.vPRD * ($scope.slParties[2] / 100.0)) * 
                     ((($scope.slPerLn / 100) * ($scope.lnCurr / $scope.lnIni)) + (($scope.slPerVt / 100) * ($scope.vtCurr / $scope.totIni)));
-                    console.log(((($scope.slPerLn / 100) * ($scope.lnCurr / $scope.lnIni)) + (($scope.slPerVt / 100) * ($scope.vtCurr / $scope.totIni))));
+                    //console.log(((($scope.slPerLn / 100) * ($scope.lnCurr / $scope.lnIni)) + (($scope.slPerVt / 100) * ($scope.vtCurr / $scope.totIni))));
                     data[1].y = parseInt(result + data[1].y);
                     break;
                 case 3:
                     result = ($scope.infoProj.vMorena * ($scope.slParties[3] / 100.0)) * 
                     ((($scope.slPerLn / 100) * ($scope.lnCurr / $scope.lnIni)) + (($scope.slPerVt / 100) * ($scope.vtCurr / $scope.totIni)));
-                    console.log(((($scope.slPerLn / 100) * ($scope.lnCurr / $scope.lnIni)) + (($scope.slPerVt / 100) * ($scope.vtCurr / $scope.totIni))));
+                    //console.log(((($scope.slPerLn / 100) * ($scope.lnCurr / $scope.lnIni)) + (($scope.slPerVt / 100) * ($scope.vtCurr / $scope.totIni))));
                     
                     data.push({
                         name: 'Morena',
@@ -226,7 +226,7 @@
             chart.series[j].remove();
         }
         
-        var series = $scope.dataSeries, result, res;
+        var series = $scope.dataSeries, result;
         var serieProy = [{ "data": [null, null, null, null], "name": "Proyección", "color": "rgba(250, 21, 33, 0.7)" },
                         { "data": [null, null, null, null], "name": "Proyección", "color": "rgba(4, 74, 147, 0.7)" },
                         { "data": [null, null, null, null], "name": "PRD", "color": "rgba(255, 222, 17, 0.7)" },
@@ -243,7 +243,7 @@
                 }
             }];
         
-        var serieWinner = { "data": [null, null, null, null], "name": "Morena", stack : 2, siglas: $scope.party.value };
+        var serieWinner = { "data": [null, null, null, null], "name": "Morena", stack : 2, siglas: "Morena" };
         
         var max = 0, valWin;
         for (var i = 0, len = series.length; i < len; i++) {
@@ -253,79 +253,45 @@
                 case 0:
                     result = ($scope.infoProj.vPRI * ($scope.slParties[0] / 100.0)) * 
                     ((($scope.slPerLn / 100) * ($scope.lnCurr / $scope.lnIni)) + (($scope.slPerVt / 100) * ($scope.vtCurr / $scope.totIni)));
+                    
+                    
+
+                    console.log($scope.infoProj.vPRI);
                     console.log(((($scope.slPerLn / 100) * ($scope.lnCurr / $scope.lnIni)) + (($scope.slPerVt / 100) * ($scope.vtCurr / $scope.totIni))));
                     
                     if (result > max)
                         max = result;
                     
-                    //if ($scope.party.value === 'PRI')
-                    //    valWin = result;
-                    
-                    if ($scope.opt.key === 0) {
-                        serie.data.push(serie.data[electionNum - 1]);
-                        res = result - serie.data[electionNum - 1];
-                        serieProy[0].data.push((res > 0 ? parseInt(res) : parseInt(res)));
-                        serieProy[0].stack = 0;
-                        chart.addSeries(serieProy[0], false);
-                    } 
-                    else {
-                        serie.data.push(parseInt(result));
-                    }
-                    
+                    serie.data.push(parseInt(result));
                     break;
                 case 1:
                     result = ($scope.infoProj.vPAN * ($scope.slParties[1] / 100.0)) * 
                     ((($scope.slPerLn / 100) * ($scope.lnCurr / $scope.lnIni)) + (($scope.slPerVt / 100) * ($scope.vtCurr / $scope.totIni)));
-                    console.log(((($scope.slPerLn / 100) * ($scope.lnCurr / $scope.lnIni)) + (($scope.slPerVt / 100) * ($scope.vtCurr / $scope.totIni))));
+                    //console.log(((($scope.slPerLn / 100) * ($scope.lnCurr / $scope.lnIni)) + (($scope.slPerVt / 100) * ($scope.vtCurr / $scope.totIni))));
                     
                     if (result > max)
                         max = result;
                     
-                    //if ($scope.party.value === 'PAN')
-                    //    valWin = result;
-                    
-                    if ($scope.opt.key === 0) {
-                        serie.data.push(serie.data[electionNum - 1]);
-                        res = result - serie.data[electionNum - 1];
-                        serieProy[1].data.push((res > 0 ? parseInt(res) : parseInt(res)));
-                        serieProy[1].stack = 1;
-                        chart.addSeries(serieProy[1], false);
-                    } 
-                    else {
-                        serie.data.push(parseInt(result));
-                    }
+                    serie.data.push(parseInt(result));
                     break;
                 case 2:
                     result = ($scope.infoProj.vPRD * ($scope.slParties[2] / 100.0)) * 
                     ((($scope.slPerLn / 100) * ($scope.lnCurr / $scope.lnIni)) + (($scope.slPerVt / 100) * ($scope.vtCurr / $scope.totIni)));
-                    console.log(((($scope.slPerLn / 100) * ($scope.lnCurr / $scope.lnIni)) + (($scope.slPerVt / 100) * ($scope.vtCurr / $scope.totIni))));
+                    //console.log(((($scope.slPerLn / 100) * ($scope.lnCurr / $scope.lnIni)) + (($scope.slPerVt / 100) * ($scope.vtCurr / $scope.totIni))));
                     
                     if (result > max)
                         max = result;
                     
-                    //if ($scope.party.value === 'PRD')
-                    //    valWin = result;
-                    
-                    if ($scope.opt.key === 0) {
-                        serie.data.push(serie.data[electionNum - 1]);
-                        res = result - serie.data[electionNum - 1];
-                        serieProy[2].data.push((res > 0 ? parseInt(res) : parseInt(res)));
-                        serieProy[2].stack = 2;
-                        chart.addSeries(serieProy[2], false);
-                    } 
-                    else {
-                        serie.data.push(null);
-                        chart.addSeries(serie, false);
-                        serieProy[2].data.push(parseInt(result));
-                        serieProy[2].stack = 1;
-                        chart.addSeries(serieProy[2], false);
-                        continue;
-                    }
-                    break;
+                    serie.data.push(null);
+                    chart.addSeries(serie, false);
+                    serieProy[2].data.push(parseInt(result));
+                    serieProy[2].stack = 1;
+                    chart.addSeries(serieProy[2], false);
+                    continue;
                 case 3:
                     result = ($scope.infoProj.vMorena * ($scope.slParties[3] / 100.0)) * 
                     ((($scope.slPerLn / 100) * ($scope.lnCurr / $scope.lnIni)) + (($scope.slPerVt / 100) * ($scope.vtCurr / $scope.totIni)));
-                    console.log(((($scope.slPerLn / 100) * ($scope.lnCurr / $scope.lnIni)) + (($scope.slPerVt / 100) * ($scope.vtCurr / $scope.totIni))));
+                    //console.log(((($scope.slPerLn / 100) * ($scope.lnCurr / $scope.lnIni)) + (($scope.slPerVt / 100) * ($scope.vtCurr / $scope.totIni))));
                     
                     if (result > max)
                         max = result;
@@ -338,19 +304,6 @@
         }
         
         chart.addSeries(serieProy[4], false);
-        var color = undefined;
-        switch ($scope.party.value) {
-            case "PRI":
-                color = "#FA1521";
-                break;
-            case "PAN":
-                color = "#044A93";
-                break;
-            case "PRD":
-                color = "#FFDE11";
-                break;
-        }
-        
         serieWinner.color = "#B5261E";
         serieWinner.data.push(parseInt(valWin));
         chart.addSeries(serieWinner);
@@ -381,7 +334,7 @@
                 $scope.msgError = "";
             }, 10000);
 
-        }).error(function (err) {
+        }).error(function () {
             $scope.isSaving = false;
             $scope.msgError = "Error de red";
             

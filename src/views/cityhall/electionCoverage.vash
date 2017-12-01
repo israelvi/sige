@@ -1,0 +1,129 @@
+﻿@html.extend("/shared/layout", function(modShr){
+    @html.block("scripts", function(model){
+<script src="/app/cityhall/electionCoverageCtrl.js"></script>
+<script type="text/javascript" language="javascript">
+        function initMap() {
+            try {
+                var mapOptions = {
+                    zoom: 13,
+                    center: new google.maps.LatLng(19.53, -99.16),
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    scaleControl: true
+                };
+                window.appGlobalMap = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+            } catch(e) {
+                console.log(e);
+            }
+        }
+		$(document).ready(function(){
+			$("#inpCurrSection").keyup(function(event) {
+				if (event.keyCode === 13) {
+					$("#btnAddCoverage").click();
+				}
+			});
+		});
+   </script>
+    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyC-N35xP526DZRzjjVVSYmHM5cMkf0_TdA" async defer>
+	</script>
+    })
+	@html.block("css", function(model){
+	<style>
+        #map {
+            height: 100%;
+        }
+    </style>
+    })
+    @html.block("body", function(model){
+<div class="main-container" id="main-container" ng-controller="electionCoverageController">
+    <div class="main-content-inner">
+        <!-- #section:basics/content.breadcrumbs -->
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try { ace.settings.check('breadcrumbs', 'fixed') } catch (e) { }
+            </script>
+            <ul class="breadcrumb">
+                <li>
+                    <i class="ace-icon fa fa-home home-icon"></i>
+                    <a href="/cityhall/index">Inicio</a>
+                </li>
+                <li class="active">Ayuntamiento</li>
+            </ul>
+        </div>
+        <div class="page-header element-center">
+            <br />
+            <h1>
+                Resultado de las elecciones
+            </h1>
+        </div>
+        <div class="page-content" ng-init='coverage = @model.secCoverage; idMun = @model.idMun; initialize();'>
+            <div class="row">
+                <div class="col-xs-10 col-xs-offset-1 widget-container-col">
+                    <div class="widget-box widget-color-blue2">
+                        <div class="widget-header">
+                            <h5 class="widget-title bigger lighter">Elige la elección a visualizar</h5>
+                            <span class="widget-toolbar">
+                                <a href="#" data-action="collapse">
+                                    <i class="ace-icon fa fa-chevron-up"></i>
+                                </a>
+                            </span>
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main padding-16">
+                                <div class="row">
+									<!-- <div class="col-xs-6">
+                                        <div class="profile-user-info profile-user-info-striped">
+                                            <div class="profile-info-row">
+                                                <div class="profile-info-name"> Elección:</div>
+                                                <div class="profile-info-value">
+                                                    <select class="form-control" id="form-field-select-1"
+                                                            ng-options="i.value for i in lstOpt" ng-model="opt"
+                                                            ng-init='lstOpt = [{key:2005, value:"2005"}, {key:2009, value:"2009"} , {key:2012, value:"2012"} , {key:2015, value:"2015"} ]; opt = lstOpt[0]'></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-xs-2">
+										<button id="btnAddCoverage" class="btn btn-info btn-sm center-size-150" type="button" ng-click="addCoverage()">
+											<i class="fa fa-plus"></i>&nbsp;&nbsp; Agregar sección
+										</button>
+                                    </div>
+                                    <div class="col-xs-2">
+										<label class="col-xs-4">Sección</label>
+										<input class="col-xs-6" type="text" id="inpCurrSection" ng-model="currSection" />
+                                    </div>
+									<div class="col-xs-2">
+										<button id="btnAssignCoverage" class="btn btn-info btn-sm center-size-150" type="button" ng-click="assignCoverage()">
+											<i class="fa fa-hand-o-down"></i>&nbsp;&nbsp; Asignar sección
+										</button>
+                                    </div>
+									<div class="col-xs-2">
+										<button id="btnDeleteCoverage" class="btn btn-info btn-sm center-size-150" type="button" ng-click="deleteCoverage()">
+											<i class="fa fa-minus"></i>&nbsp;&nbsp; Eliminar sección
+										</button>
+                                    </div>
+									<div class="col-xs-2">
+										<button id="btnSaveCoverage" class="btn btn-info btn-sm center-size-150" type="button" ng-click="saveCoverage()">
+											<i class="fa fa-save"></i>&nbsp;&nbsp; Guardar sección
+										</button>
+                                    </div>
+                                </div>
+								<div class="row" ng-show="errorMsg">
+									<label class="col-xs-10" style="color:#FF1111; font-size: 10px;">{{errorMsg}}</label>
+								</div>
+								<div class="row" ng-show="successMsg">
+									<label class="col-xs-10" style="color:#33FF33; font-size: 10px;">{{successMsg}}</label>
+								</div>
+                            </div>
+                        </div>
+						<div class="col-xs-12" style="height: 700px !important" id="map">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    })
+})

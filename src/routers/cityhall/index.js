@@ -9,6 +9,7 @@ var projectionV4Controller = require("./projectionV4Controller");
 var pollingProjectionController = require("./pollingProjectionController");
 var pollingProjectionV2Controller = require("./pollingProjectionV2Controller");
 var sectionChangePartyController = require("./sectionChangePartyController");
+var electionCoverageController = require("./electionCoverageController");
 var express = require('express');
 var router = express.Router();
 
@@ -26,6 +27,7 @@ controllers.init = function(app) {
     sectionChangePartyController.init(app, router);
     pollingProjectionController.init(app, router);
     pollingProjectionV2Controller.init(app, router);
+    electionCoverageController.init(app, router);
     app.use('/cityhall', router);
 };
 

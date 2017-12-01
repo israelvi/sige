@@ -222,47 +222,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        <div class="profile-user-info profile-user-info-striped">
-                                            <div class="profile-info-row">
-                                                <div class="profile-info-name"> Agrupar proyección</div>
-                                                <div class="profile-info-value">
-                                                    <select class="form-control" id="form-field-select-1"
-                                                            ng-options="i.value for i in lstOpt" ng-model="opt"
-                                                            ng-init='lstOpt = [{key:1, value:"SI"}, {key: 0, value: "NO"}]; opt = lstOpt[0]'></select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6">
-                                        <div class="profile-user-info profile-user-info-striped">
-                                            <div class="profile-info-row">
-                                                <div class="profile-info-name"> Partido </div>
-                                                <div class="profile-info-value">
-                                                    <select class="form-control" id="form-field-select-1"
-                                                            ng-options="i.value for i in lstParties" ng-model="party"
-                                                            ng-init='lstParties = @model.parties; party = lstParties[0];'></select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        <div class="profile-user-info profile-user-info-striped">
-                                            <div class="profile-info-row">
-                                                <div class="profile-info-name"> Votos por encima del mayor</div>
-                                                <div class="profile-info-value">
-                                                    <input type="text" ng-model="vtExt" ng-init="vtExt = 1000;" class="form-control" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6">
-                                        &nbsp;
-                                    </div>
-                                </div>
+                                <input type="hidden" ng-model="vtExt" ng-init="vtExt = 1000;" class="form-control" />
                                 <br />
                                 <br />
                                 <div class="row">

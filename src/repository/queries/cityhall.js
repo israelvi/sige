@@ -13,6 +13,9 @@ cityhallQry.qryElecAyunt = "SELECT eas.Municipio AS municipio, eas.Anio AS anio,
     "FROM eleccionesayuntamientoseccion eas " +
     "WHERE eas.Anio = {1} AND eas.IdMunicipio = {2} GROUP BY eas.Municipio, eas.Anio ORDER BY eas.Anio ";
 
+cityhallQry.qryCoverages = "SELECT c.Cobertura " +
+    "FROM cobertura c " +
+    "WHERE c.IdMunicipio = {0} ORDER BY c.IdCobertura DESC ";
 
 cityhallQry.qrySelFieldCandidate = "SELECT cn.campo, p.color, p.siglas FROM candidato cn INNER JOIN partido p ON p.IdPartido = cn.IdPartidoPrincipal WHERE p.siglas = '{0}' AND cn.anio = '{1}' LIMIT 0, 1";
 

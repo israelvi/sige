@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="public\app\cityhall\pollingProjectionCtrl.js" />
+    <Compile Include="public\app\cityhall\electionCoverageCtrl.js" />
     <Compile Include="public\app\cityhall\projectionV4Ctrl.js" />
     <Compile Include="public\app\cityhall\projectionV3Ctrl.js" />
     <Compile Include="public\app\cityhall\projectionV2Ctrl.js" />
@@ -44,6 +45,7 @@
     <Compile Include="public\javascripts\ui-bootstrap-tpls-0.12.0.min.js" />
     <Compile Include="routers\cityhall\pollingProjectionV2Controller.js" />
     <Compile Include="routers\cityhall\pollingProjectionController.js" />
+    <Compile Include="routers\cityhall\electionCoverageController.js" />
     <Compile Include="routers\cityhall\projectionV4Controller.js" />
     <Compile Include="routers\cityhall\projectionV3Controller.js" />
     <Compile Include="routers\cityhall\projectionV2Controller.js" />
@@ -992,6 +994,7 @@
     <Content Include="README.md" />
     <Content Include="views\cityhall\pollingProjectionV2.vash" />
     <Content Include="views\cityhall\pollingProjection.vash" />
+    <Content Include="views\cityhall\electionCoverage.vash" />
     <Content Include="views\cityhall\projectionV4.vash" />
     <Content Include="views\cityhall\projectionV3.vash" />
     <Content Include="views\cityhall\projectionV2.vash" />

@@ -102,6 +102,12 @@
                   </a>
                 </li>
                 <li>
+                  <a href="/cityhall/electionCoverage?id=105">
+                    <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
+                    Coberturas de las elecciones
+                  </a>
+                </li>
+                <li>
                   <a href="/cityhall/sectionChangeParty?id=105">
                     <i class="ace-icon fa fa-chevron-right bigger-110 blue"></i>
                     Secciones que cambiaron de partido
